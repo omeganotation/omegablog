@@ -106,8 +106,15 @@ void f(string& cur, bool change, bool zero) {
         if(zero || (count(cur.begin(), cur.end(), '0') == cur.size() - 1 && cur.back() != '0')) {
             cur += "0";
             f(cur, false, true);
-            cur.pop_back();
-            for(int i = cur[0] - '0'; i < 10; i++) {
+            int firstNonzero = 0;
+            for(int i = 0; i < cur.size(); i++) {
+                if(cur[i] != '0') {
+                    firstNonzero = cur[i] - '0';
+                    break;
+                }
+            }
+            cur.pop_back();    
+            for(int i = firstNonzero; i < 10; i++) {
                 cur += to_string(i);
                 f(cur, false, false);
                 cur.pop_back();
